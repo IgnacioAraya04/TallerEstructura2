@@ -1,3 +1,6 @@
+#ifndef AVLNODE_H
+#define AVLNODE_H
+
 #include <iostream>
 #include "Node.h"
 using namespace std;
@@ -47,4 +50,6 @@ class AVLNode {
         string toString() {
             return "T: " + to_string(paciente->getPaciente()->getTemperatura()) + "° | D: "+to_string(paciente->getPaciente()->getDolor())+ " | TD: "+ paciente->getPaciente()->getTipoDolor() + " | Tr: " +to_string(paciente->getPaciente()->getTrauma()) + " | SN: " + to_string(paciente->getPaciente()->getSintomasNeurologicos()) + " | RC: " + to_string(paciente->getPaciente()->getCirugia()) + " | DH: " + to_string(paciente->getPaciente()->getDiasHospitalizado());
         }
-};      
+};
+
+#endif

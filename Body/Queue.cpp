@@ -4,16 +4,19 @@ Queue::Queue() {
     this->inicio = nullptr;
 }
 
-void Queue::push(Paciente* paciente) {
-    Node* nuevoNodo = new Node(paciente);
+void Queue::push(Node* nodo) {
+    if (nodo == nullptr) {
+        return;
+    }
+
     if (this -> inicio == nullptr) {
-        this -> inicio = nuevoNodo;
+        this -> inicio = nodo;
     } else {
         Node* actual = this -> inicio;
         while (actual->getNext() != nullptr) {
             actual = actual->getNext();
         }
-        actual->setNext(nuevoNodo);
+        actual->setNext(nodo);
     }
 }
 

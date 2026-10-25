@@ -1,4 +1,6 @@
-#pragma once
+#ifndef QUEUE_H
+#define QUEUE_H
+
 #include "Node.h"
 
 class Queue {
@@ -6,7 +8,7 @@ class Queue {
         Node* inicio;
     public:
         Queue();
-        void push(Node* paciente);
+        void push(Node* nodo);
         void pop();
         Node* front();
         Node* takeFront();
@@ -16,3 +18,5 @@ class Queue {
         void clear();
         ~Queue();
 };
+
+#endif

@@ -40,16 +40,16 @@ void cargarPacientes() {
             string IDstring, edadString, dolorString, diasString, temperaturaString, presionString, traumaString, neuroString, cirugiaString, nombre, tipoDolor;
         
             getline(ss, IDstring, ';');
+            getline(ss, nombre, ';');
             getline(ss, edadString, ';');
-            getline(ss, dolorString, ';');
-            getline(ss, diasString, ';');
             getline(ss, temperaturaString, ';');
             getline(ss, presionString, ';');
+            getline(ss, dolorString, ';');
+            getline(ss, tipoDolor, ';');
             getline(ss, traumaString, ';');
             getline(ss, neuroString, ';');
             getline(ss, cirugiaString, ';');
-            getline(ss, nombre, ';');
-            getline(ss, tipoDolor, ';');
+            getline(ss, diasString, ';');
 
             ID = stoi(IDstring);
             edad = stoi(edadString);
@@ -89,15 +89,30 @@ void cargarPacientes() {
 
 }
 
+void agregarPacienteAArbol(AVLTree& arbol, Node* paciente) {
+    Paciente* copia = new Paciente(
+        paciente->getPaciente()->getID(),
+        paciente->getPaciente()->getNombre(),
+        paciente->getPaciente()->getEdad(),
+        paciente->getPaciente()->getTemperatura(),
+        paciente->getPaciente()->getPresion(),
+        paciente->getPaciente()->getDolor(),
+        paciente->getPaciente()->getTipoDolor(),
+        paciente->getPaciente()->getTrauma(),
+        paciente->getPaciente()->getSintomasNeurologicos(),
+        paciente->getPaciente()->getCirugia(),
+        paciente->getPaciente()->getDiasHospitalizado()
+    );
+    arbol.insert(new Node(copia));
+}
+
 void arbolDecisiones(Node* paciente) {
     cout << "Ruta" ;
-    AVLNode* nodo;
     if(paciente->getPaciente()->getEdad() <= 14){
         cout << "Edad < = 14" << endl;
         cout << "" <<endl;
         cout << "Servicio asignado: Pediatria" << endl;
-        nodo = new AVLNode(paciente);
-        pediatria.insert(nodo, paciente);
+        agregarPacienteAArbol(pediatria, paciente);
         return;
     } else {
         cout << "Edad > 14" ;
@@ -105,8 +120,7 @@ void arbolDecisiones(Node* paciente) {
             cout << "-> Sintomas neurologicos == 1" << endl;
             cout << "" <<endl;
             cout << "Servicio asignado: Neurologia" << endl;
-            nodo = new AVLNode(paciente);
-            neurologia.insert(nodo, paciente);
+            agregarPacienteAArbol(neurologia, paciente);
             return;
         } else {
             cout << "-> Sintomas neurologicos == 0";
@@ -116,15 +130,13 @@ void arbolDecisiones(Node* paciente) {
                     cout << "-> Cirugia == 1" << endl;
                     cout << "" <<endl;
                     cout << "Servicio asignado: Cirugia" << endl;
-                    nodo = new AVLNode(paciente);
-                    cirugia.insert(nodo, paciente);
+                    agregarPacienteAArbol(cirugia, paciente);
                     return;
                 } else {
                     cout << "-> Cirugia == 0" << endl;
                     cout << "" <<endl;
                     cout << "Servicio asignado: Traumatologia" << endl;
-                    nodo = new AVLNode(paciente);
-                    traumatologia.insert(nodo, paciente);
+                    agregarPacienteAArbol(traumatologia, paciente);
                     return;
                 }
             } else{
@@ -133,8 +145,7 @@ void arbolDecisiones(Node* paciente) {
                     cout << "-> Presion Arterial > 180" << endl;
                     cout << "" <<endl;
                     cout << "Servicio asignado: Cardiologia" << endl;
-                    nodo = new AVLNode(paciente);
-                    cardiologia.insert(nodo, paciente);
+                    agregarPacienteAArbol(cardiologia, paciente);
                     return;
                 } else {
                     cout<< "-> Presion Arterial < 180";
@@ -142,8 +153,7 @@ void arbolDecisiones(Node* paciente) {
                         cout << "-> Dolor >= 7 o Temperatura >= 40.0" << endl;
                         cout << "" <<endl;
                         cout << "Servicio asignado: Urgencias" << endl;
-                        nodo = new AVLNode(paciente);
-                        urgencias.insert(nodo, paciente);
+                        agregarPacienteAArbol(urgencias, paciente);
                         return;
                     } else {
                         cout << "-> Dolor < 7 y Temperatura < 40.0";
@@ -151,15 +161,13 @@ void arbolDecisiones(Node* paciente) {
                             cout << "-> Dias hospitalizado > 2" << endl;
                             cout << "" <<endl;
                             cout << "Servicio asignado: Hospitalizacion" << endl;
-                            nodo = new AVLNode(paciente);
-                            hospitalizacion.insert(nodo, paciente);
+                            agregarPacienteAArbol(hospitalizacion, paciente);
                             return;
                         } else {
                             cout << "-> Dias hospitalizado < 2" << endl;
                             cout << "" <<endl;
                             cout << "Servicio asignado: Medicina General" << endl;
-                            nodo = new AVLNode(paciente);
-                            medicinaGeneral.insert(nodo, paciente);
+                            agregarPacienteAArbol(medicinaGeneral, paciente);
                             return;
                         }
                     }
@@ -196,59 +204,59 @@ void atenderPaciente() {
 void verDepartamentos() {
     cout << "=== Estados de los departamentos ===" << endl;
     cout << "Pediatria: " << endl;
-    if (pediatria.search(0) == nullptr) {
+    if (pediatria.isEmpty()) {
         cout << "No hay pacientes en Pediatria" << endl;
     } else {
-        pediatria.inOrder(pediatria.search(0));
+        pediatria.inOrder(pediatria.getRoot());
     }
 
     cout << "Neurologia: " << endl;
-    if (neurologia.search(0) == nullptr) {
+    if (neurologia.isEmpty()) {
         cout << "No hay pacientes en Neurologia" << endl;
     } else {
-        neurologia.inOrder(neurologia.search(0));  
+        neurologia.inOrder(neurologia.getRoot());
     }
 
     cout << "Traumatologia: " << endl;
-    if (traumatologia.search(0) == nullptr) {
+    if (traumatologia.isEmpty()) {
         cout << "No hay pacientes en Traumatologia" << endl;
     } else {
-        traumatologia.inOrder(traumatologia.search(0));
+        traumatologia.inOrder(traumatologia.getRoot());
     }
 
     cout << "Cardiologia: " << endl;
-    if (cardiologia.search(0) == nullptr) {
+    if (cardiologia.isEmpty()) {
         cout << "No hay pacientes en Cardiologia" << endl;
     } else {
-        cardiologia.inOrder(cardiologia.search(0));
+        cardiologia.inOrder(cardiologia.getRoot());
     }
 
     cout << "Cirugia: " << endl;
-    if (cirugia.search(0) == nullptr) {
+    if (cirugia.isEmpty()) {
         cout << "No hay pacientes en Cirugia" << endl;
     } else {
-        cirugia.inOrder(cirugia.search(0));
+        cirugia.inOrder(cirugia.getRoot());
     }
 
     cout << "Urgencias: " << endl;
-    if (urgencias.search(0) == nullptr) {
+    if (urgencias.isEmpty()) {
         cout << "No hay pacientes en Urgencias" << endl;
     } else {
-        urgencias.inOrder(urgencias.search(0));
+        urgencias.inOrder(urgencias.getRoot());
     }
     
     cout << "Medicina General: " << endl;
-    if (medicinaGeneral.search(0) == nullptr) {
+    if (medicinaGeneral.isEmpty()) {
         cout << "No hay pacientes en Medicina General" << endl;
     } else {
-        medicinaGeneral.inOrder(medicinaGeneral.search(0));
+        medicinaGeneral.inOrder(medicinaGeneral.getRoot());
     }
 
     cout << "Hospitalizacion: " << endl;
-    if (hospitalizacion.search(0) == nullptr) {
+    if (hospitalizacion.isEmpty()) {
         cout << "No hay pacientes en Hospitalizacion" << endl;
     } else {
-        hospitalizacion.inOrder(hospitalizacion.search(0));
+        hospitalizacion.inOrder(hospitalizacion.getRoot());
     }
 
     cout << "" << endl;

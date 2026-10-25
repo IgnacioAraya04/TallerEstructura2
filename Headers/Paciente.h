@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef PACIENTE_H
+#define PACIENTE_H
 
 #include <iostream>
 #include <string>
@@ -32,3 +32,5 @@ class Paciente {
         bool getCirugia();
         int getDiasHospitalizado();
 };
+
+#endif

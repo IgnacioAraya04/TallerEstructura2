@@ -4,6 +4,14 @@ AVLTree::AVLTree() {
     this->root = nullptr;
 }
 
+bool AVLTree::isEmpty() const {
+    return root == nullptr;
+}
+
+AVLNode* AVLTree::getRoot() const {
+    return root;
+}
+
 int AVLTree::height(AVLNode* node) {
     if (node == nullptr) {
         return 0;
@@ -50,15 +58,15 @@ AVLNode* AVLTree::rotateRightLeft(AVLNode* node) {
     return rotateLeft(node);
 }
 
-AVLNode* AVLTree::insert(AVLNode* node, Node* paciente) {
+AVLNode* AVLTree::insertNode(AVLNode* node, Node* paciente) {
     if (node == nullptr) {
         return new AVLNode(paciente);
     }
 
     if (paciente->getPaciente()->getID() < node->getPaciente()->getPaciente()->getID()) {
-        node->setLeft(insert(node->getLeft(), paciente));
+        node->setLeft(insertNode(node->getLeft(), paciente));
     } else if (paciente->getPaciente()->getID() > node->getPaciente()->getPaciente()->getID()) {
-        node->setRight(insert(node->getRight(), paciente));
+        node->setRight(insertNode(node->getRight(), paciente));
     } else {
         return node;
     }
@@ -86,6 +94,13 @@ AVLNode* AVLTree::insert(AVLNode* node, Node* paciente) {
     return node;
 }
 
+void AVLTree::insert(Node* paciente) {
+    if (paciente == nullptr) {
+        return;
+    }
+    root = insertNode(root, paciente);
+}
+
 AVLNode* AVLTree::search(int ID) {
     AVLNode* current = root;
     while (current != nullptr) {
@@ -106,7 +121,6 @@ void AVLTree::inOrder(AVLNode* root) {
         cout << "ID: " << root->getPaciente()->getPaciente()->getID() << ", Nombre: " << root->getPaciente()->getPaciente()->getNombre() << endl;
         inOrder(root->getRight());
     }
-    
 }
 
 void AVLTree::preOrder(AVLNode* root) {

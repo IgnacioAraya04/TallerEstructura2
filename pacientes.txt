@@ -1,1 +1,3 @@
-001;Juan Pablo;45;35.1;114;4;Cabeza;0;1;0;3
+001;Juan Pablo;54;30.2;118;2;Cabeza;0;1;0;2
+002;Ana Maria;12;24.2;102;4;Brazo;0;0;0;1
+003;Micheal J;32;34.2;180;5;Pecho;0;0;0;1
