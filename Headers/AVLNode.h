@@ -43,4 +43,8 @@ class AVLNode {
         void setHeight(int height) {
             this->height = height;
         }
+
+        string toString() {
+            return "T: " + to_string(paciente->getPaciente()->getTemperatura()) + "° | D: "+to_string(paciente->getPaciente()->getDolor())+ " | TD: "+ paciente->getPaciente()->getTipoDolor() + " | Tr: " +to_string(paciente->getPaciente()->getTrauma()) + " | SN: " + to_string(paciente->getPaciente()->getSintomasNeurologicos()) + " | RC: " + to_string(paciente->getPaciente()->getCirugia()) + " | DH: " + to_string(paciente->getPaciente()->getDiasHospitalizado());
+        }
 };      

@@ -6,7 +6,7 @@ class Queue {
         Node* inicio;
     public:
         Queue();
-        void push(Paciente* paciente);
+        void push(Node* paciente);
         void pop();
         Node* front();
         Node* takeFront();
